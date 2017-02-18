@@ -13,7 +13,7 @@ class TelegramAdapter implements PostDeployAdapterInterface
         $this->config = $config;
     }
 
-    public function run(array $payload) : bool
+    public function run(Deploy $deploy, array $payload) : bool
     {
         $telegram = new TelegramApi($this->config['bot_token']);
 
@@ -22,7 +22,7 @@ class TelegramAdapter implements PostDeployAdapterInterface
           'parse_mode'               => 'markdown',
           'disable_web_page_preview' => true,
           'disable_notification'     => true,
-          'text'                     => '`'.$this->getVersion().'` was deployed on *'.gethostname().'*'."\n".'['.substr($this->payload['head_commit']['id'], 0, 8).']('.$this->payload['head_commit']['url'].') `'.$this->payload['head_commit']['message'].'` by [@'.$this->payload['head_commit']['author']['username'].'](https://github.com/'.$this->payload['head_commit']['author']['username'].')',
+          'text'                     => '`'.$deploy->getVersion().'` was deployed on *'.gethostname().'*'."\n".'['.substr($this->payload['head_commit']['id'], 0, 8).']('.$this->payload['head_commit']['url'].') `'.$this->payload['head_commit']['message'].'` by [@'.$this->payload['head_commit']['author']['username'].'](https://github.com/'.$this->payload['head_commit']['author']['username'].')',
         ]);
 
         return true;

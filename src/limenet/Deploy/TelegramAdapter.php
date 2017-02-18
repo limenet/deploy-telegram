@@ -8,7 +8,8 @@ class TelegramAdapter implements PostDeployAdapterInterface
 {
     private $config;
 
-    public function config(array $config) : void {
+    public function config(array $config) : void
+    {
         $this->config = $config;
     }
 

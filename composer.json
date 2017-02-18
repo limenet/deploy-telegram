@@ -1,0 +1,21 @@
+{
+    "name": "limenet/deploy-telegram",
+    "description": "Telegram adapter for limenet/deploy",
+    "type": "library",
+    "require": {
+        "limenet/deploy":"dev-master",
+        "irazasyed/telegram-bot-sdk": "3.*@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "limenet\\": "src/limenet/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Linus Metzler",
+            "email": "linus.metzler@gmail.com"
+        }
+    ]
+}

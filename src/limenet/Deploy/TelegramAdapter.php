@@ -13,7 +13,7 @@ class TelegramAdapter implements PostDeployAdapterInterface
         $this->config = $config;
     }
 
-    public function run(Deploy $deploy, array $payload) : bool
+    public function run(Deploy $deploy) : bool
     {
         $telegram = new TelegramApi($this->config['bot_token']);
 

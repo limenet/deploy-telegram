@@ -3,7 +3,7 @@
     "description": "Telegram adapter for limenet/deploy",
     "type": "library",
     "require": {
-        "limenet/deploy": "^0.2.0",
+        "limenet/deploy": "^0.3.0",
         "irazasyed/telegram-bot-sdk": "3.*@dev"
     },
     "autoload": {

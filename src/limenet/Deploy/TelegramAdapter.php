@@ -22,7 +22,7 @@ class TelegramAdapter implements PostDeployAdapterInterface
           'parse_mode'               => 'markdown',
           'disable_web_page_preview' => true,
           'disable_notification'     => true,
-          'text'                     => '`'.$deploy->getVersion().'` was deployed on *'.gethostname().'*'."\n".'['.subst($deploy->strategy->getCommitHash(), 0, 8).']('.$deploy->strategy->getCommitUrl().') `'.$deploy->strategy->getCommitMessage().'` by '.$deploy->strategy->getCommitUsername(),
+          'text'                     => '`'.$deploy->getVersion().'` was deployed on *'.gethostname().'*'."\n".'['.substr($deploy->strategy->getCommitHash(), 0, 8).']('.$deploy->strategy->getCommitUrl().') `'.$deploy->strategy->getCommitMessage().'` by '.$deploy->strategy->getCommitUsername(),
         ]);
 
         return true;

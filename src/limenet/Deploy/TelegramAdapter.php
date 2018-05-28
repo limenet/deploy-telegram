@@ -3,6 +3,7 @@
 namespace limenet\Deploy;
 
 use Telegram\Bot\Api as TelegramApi;
+use \Curl\Curl;
 
 class TelegramAdapter implements PostDeployAdapterInterface
 {
@@ -15,16 +16,21 @@ class TelegramAdapter implements PostDeployAdapterInterface
 
     public function run(Deploy $deploy) : bool
     {
-        $telegram = new TelegramApi($this->config['bot_token']);
+        $curl = new Curl();
 
-        $telegram->sendMessage([
+        $text = sprintf('`%s` was deployed on *%s*'."\n".'[%s](%s) `%s` by %s', $deploy->getVersion(), gethostname(), substr($deploy->strategy->getCommitHash(), 0, 8), $deploy->strategy->getCommitUrl(), $deploy->strategy->getCommitMessage(), $deploy->strategy->getCommitUsername());
+
+        $curl->post(sprintf('https://api.telegram.org/bot%s/sendMessage', $this->config['bot_token']),[
           'chat_id'                  => $this->config['chat_id'],
           'parse_mode'               => 'markdown',
           'disable_web_page_preview' => true,
           'disable_notification'     => true,
-          'text'                     => '`'.$deploy->getVersion().'` was deployed on *'.gethostname().'*'."\n".'['.substr($deploy->strategy->getCommitHash(), 0, 8).']('.$deploy->strategy->getCommitUrl().') `'.$deploy->strategy->getCommitMessage().'` by '.$deploy->strategy->getCommitUsername(),
+          'text'                     => $text,
         ]);
 
-        return true;
+        $error = $curl->error;
+        $curl->close();
+
+        return !$error;
     }
 }
